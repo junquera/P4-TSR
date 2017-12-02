@@ -1,14 +1,39 @@
 <html>
   <head>
+    <title>P4</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='dice.png') }}">
 
     <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
 
-    <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   </head>
   <body>
-    
+    <div class="jumbotron text-center">
+      <img src="{{ url_for('static', filename='dice.png') }}" />
+      <h1>P4</h1>
+      <p>Programación de una aplicación con servicios web</p>
+    </div>
 
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Column 1</h3>
+          <p>Lorem ipsum dolor..</p>
+          <p>Ut enim ad..</p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 2</h3>
+          <p>Lorem ipsum dolor..</p>
+          <p>Ut enim ad..</p>
+        </div>
+        <div class="col-sm-4">
+          <h3>Column 3</h3>
+          <p>Lorem ipsum dolor..</p>
+          <p>Ut enim ad..</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>

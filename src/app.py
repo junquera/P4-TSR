@@ -4,7 +4,6 @@ from cron import Cron
 app = Flask(__name__)
 
 cron = Cron()
-
 @cron.add_task(minute=2)
 def save_values():
     print("Saving!")
