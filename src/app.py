@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, url_for
 from cron import Cron
 
+import time
+
 app = Flask(__name__)
 
 cron = Cron()
@@ -10,9 +12,10 @@ def save_values():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-
+    args = {
+        't': time.time
+    }
+    return render_template('index.html', **args)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
