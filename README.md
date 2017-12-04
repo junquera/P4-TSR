@@ -8,7 +8,7 @@
 
 - Nube: https://www.xively.com/
 
-- Local:
+- Local: MongoDB
 
 ### Presentación de la web
 
@@ -20,6 +20,17 @@
 
 ### Interfaz gráfica de usuario de las plataformas externas (dato 3)
 
+## Especificación avanzada
+
+### Desarrollo de umbral actual (respondiendo por SSE o *web pusher*)
+
+- SSE: http://flask.pocoo.org/snippets/116/
+
+- Web Pusher: https://sendpulse.com/
+
+### Multiusuario con OAuth
+
+### Docker
 
 ## Bibliografía
 
