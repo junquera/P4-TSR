@@ -1,7 +1,9 @@
 from pymongo import MongoClient
 import datetime
 
-class P4DB():
+import credentials
+
+class Internal_DB():
     def __init__(self):
         # Client connection
         client = MongoClient('localhost', 27017)
@@ -14,7 +16,7 @@ class P4DB():
             'date': datetime.datetime.utcnow()
         })
 
-    def get_all(self, ):
+    def get_all(self):
         return self.random_values.find()
 
     def get_by_threshold(self, **kwargs):

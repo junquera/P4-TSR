@@ -8,6 +8,11 @@
 
 - Nube: https://www.xively.com/
 
+https://www.coria.com/blog/xively/xivelyonpython-step2
+https://junquera.app.xively.com/devices/84740985-263b-4777-a44a-53710e34de82
+https://developer.xively.com/docs/device-authentication-methods
+https://developer.xively.com/
+
 - Local: MongoDB
 
 ### Presentación de la web
