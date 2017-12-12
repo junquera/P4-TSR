@@ -114,7 +114,3 @@ class Xively():
         # client.disconnect()
         #
         # client.loop_stop()
-
-
-x = Xively()
-print(x.retrieve_random_values_http())

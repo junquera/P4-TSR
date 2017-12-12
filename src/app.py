@@ -8,7 +8,6 @@ import time
 
 db = Almacenamiento()
 
-
 app = Flask(__name__)
 
 def format_datetime(value, format='medium'):

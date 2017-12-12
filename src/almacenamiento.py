@@ -9,8 +9,11 @@ class Internal_DB():
         client = MongoClient('localhost', 27017)
         db = client.p4
         self.random_values = db.random_values
+        self.random_values.delete_many({})
 
-    def add_value(self, value, time=datetime.datetime.utcnow()):
+    def add_value(self, value, time=None):
+        if time is None:
+            time = datetime.datetime.utcnow()
         self.random_values.insert_one({
             'value': value,
             'date': time
@@ -42,8 +45,10 @@ class External_DB():
         # Client connection
         self.client = Xively()
 
-    def add_value(self, value, time=datetime.datetime.utcnow()):
-        self.client.publish_random_value_mqtt(v, time=time)
+    def add_value(self, value, time=None):
+        if time is None:
+            time = datetime.datetime.utcnow()
+        self.client.publish_random_value_mqtt(value, time=str(time))
 
     def get_all(self):
         return self.client.retrieve_random_values_http()
@@ -70,7 +75,7 @@ class External_DB():
                         result['min'] = v
         return result
 
-def Almacenamiento():
+class Almacenamiento():
     def __init__(self):
         # Client connection
         self.external_cli = External_DB()
