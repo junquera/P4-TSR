@@ -5,12 +5,14 @@ class Cron():
     def __init__(self):
         self.tasks = []
 
-    def add_task(self, **kwargs):
+    def add_task(self, fast_boot=False, **kwargs):
         if 'minute' in kwargs:
             minute = kwargs['minute']
 
         def wrapper(f):
             def launch(f, minute):
+                if fast_boot:
+                    f()
                 while 1:
                     time.sleep(60 * minute)
                     f()

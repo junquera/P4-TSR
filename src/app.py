@@ -1,12 +1,13 @@
 from flask import Flask, request, render_template, url_for
 from cron import Cron
 
-from almacenamiento import Internal_DB
+from almacenamiento import Almacenamiento
 from obtain import get_a_value
 
-db = Internal_DB()
-
 import time
+
+db = Almacenamiento()
+
 
 app = Flask(__name__)
 
@@ -16,7 +17,7 @@ def format_datetime(value, format='medium'):
 app.jinja_env.filters['datetime'] = format_datetime
 
 cron = Cron()
-@cron.add_task(minute=2)
+@cron.add_task(minute=2, fast_boot=True)
 def save_value():
     db.add_value(get_a_value())
 
