@@ -17,7 +17,12 @@ class Internal_DB():
         })
 
     def get_all(self):
-        return self.random_values.find()
+        values =  self.random_values.find()
+        return [value for value in values]
+
+    def get_one(self):
+        return self.random_values.find_one()
+
 
     def get_by_threshold(self, **kwargs):
         result = {}

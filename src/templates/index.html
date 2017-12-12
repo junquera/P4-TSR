@@ -24,9 +24,26 @@
 <!-- TODO En lugar de VM, docker -->
 
     <div class="container">
-      <div>
+      <!-- <div>
         <b>{{ t() }}</b>
-      </div>
+      </div> -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>
+              Time
+            </td>
+            <td>
+              Value
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for value in values %}
+            <tr><td>{{ value.date | datetime }}</td><td>{{ value.value }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
       <div class="row">
         <div class="col-sm-4">
           <h3>Column 1</h3>

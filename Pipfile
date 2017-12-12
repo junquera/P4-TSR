@@ -7,10 +7,11 @@ name = "pypi"
 
 [packages]
 
-Flask = "*"
+flask = "*"
 pymongo = "*"
-xiPy = "*"
+xipy = "*"
 requests = "*"
+paho-mqtt = "*"
 
 
 [dev-packages]

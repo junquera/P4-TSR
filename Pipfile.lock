@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c8913e7bfadd6c336ea95cf1ac7ee71a807df2857708172323cc7f38b0a027c1"
+            "sha256": "c0b9b2c701714657897cc8211057e447f0e3609b1127ba9d734463facb0d8366"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -9,9 +9,9 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.13.0-17-generic",
+            "platform_release": "4.13.0-19-generic",
             "platform_system": "Linux",
-            "platform_version": "#20-Ubuntu SMP Mon Nov 6 10:04:08 UTC 2017",
+            "platform_version": "#22-Ubuntu SMP Mon Dec 4 11:58:07 UTC 2017",
             "python_full_version": "3.6.3",
             "python_version": "3.6",
             "sys_platform": "linux"
@@ -80,6 +80,12 @@
                 "sha256:a6be69091dac236ea9c6bc7d012beab42010fa914c459791d627dad4910eb665"
             ],
             "version": "==1.0"
+        },
+        "paho-mqtt": {
+            "hashes": [
+                "sha256:31911f6031de306c27ed79dc77b690d7c55b0dcb0f0434ca34ec6361d0371122"
+            ],
+            "version": "==1.3.1"
         },
         "pymongo": {
             "hashes": [
