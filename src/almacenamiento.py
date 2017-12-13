@@ -2,7 +2,6 @@ from pymongo import MongoClient
 from xively import Xively
 import datetime
 
-
 class Internal_DB():
     def __init__(self):
         # Client connection
@@ -33,25 +32,21 @@ class Internal_DB():
             if not kwargs['min'] is None:
                 try:
                     min = float(kwargs['min'])
-                    print("Min %s" % min)
                     min_vs = self.random_values.find({
                         'value': {'$lt':  min}
                     })
                     result['min'] = [value for value in min_vs]
                 except:
-                    print("Error in min")
                     pass
         if 'max' in kwargs:
             if not kwargs['max'] is None:
                 try:
                     max = float(kwargs['max'])
-                    print("Max %s" % max)
                     max_vs = self.random_values.find({
                         'value': {'$gt': max}
                     })
                     result['max'] = [value for value in max_vs]
                 except:
-                    print("Error in max")
                     pass
         return result
 

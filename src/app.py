@@ -13,16 +13,15 @@ db = Almacenamiento()
 app = Flask(__name__)
 
 def format_datetime(value, format='medium'):
-    print(value)
     if type(value) == datetime.datetime:
-        return value.isoformat(' ')
+        return value
     else:
         if value[-1] == 'Z':
             value = value[:-1]
         try:
-            return datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S').isoformat(' ')
+            return datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')
         except:
-            return datetime.datetime.strptime(value, '%Y-%m-%d %H:%M:%S').isoformat(' ')
+            return datetime.datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
 
 app.jinja_env.filters['datetime'] = format_datetime
 
@@ -65,16 +64,11 @@ def index():
             threshhold_values = db.get_by_threshold(max=max_threshold, min=min_threshold)
         else:
             threshhold_values = []
-        # result_values = []
-        # if 'min' in threshhold_values:
-        #     result_values += threshhold_values['min']
-        # if 'max' in threshhold_values:
-        #     result_values += threshhold_values['max']
-        # print(result_values)
+
         args['values'] = threshhold_values
 
 
     return render_template('index.html', **args)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080, debug=True)

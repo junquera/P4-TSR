@@ -54,7 +54,8 @@
                     <label for="max_threshold">Max</label>
                     <input id="max_threshold" class="form-control" name="max_threshold" type="number" value="{% if method == 'POST' and 'max_threshold' in request.form %}{{ request.form['max_threshold'] }}{% endif %}"></input>
                   </DIV>
-                  <button type="submit" class="btn btn-primary">Valores por umbral</button>
+                  <button type="submit" class="col btn btn-primary">Valores por umbral</button>
+                  <button type="submit" class="col btn btn-secondary" disabled>Notificar por umbral</button>
                 </form>
               </div>
             </div>
@@ -67,26 +68,26 @@
                 <div id="chart_div" style="height: 450px;"></div>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                 <script type="text/javascript">
-                 google.charts.load('current', {'packages':['corechart']});
+                 google.charts.load('current', {'packages':['line', 'corechart']});
                  google.charts.setOnLoadCallback(drawChart);
 
                  function drawChart() {
 
                    var data = new google.visualization.DataTable();
-                   data.addColumn('date', 'Date');
+                   data.addColumn('datetime', 'Date');
                   data.addColumn('number', 'Value');
                   data.addRows([
-                    {% for value in values %}
+                    {% for value in values |  sort(attribute='date') %}
                     [ new Date(Date.parse("{{ value.date | datetime }}")), {{ value.value }} ],
                     {% endfor %}
                   ]);
+
                    var options = {
                      title: 'Distribución de valores por tiempo',
-                     hAxis: {title: 'Tiempo'},
-                     vAxis: {title: 'Valor'}
+                     curveType: 'function'
                    };
 
-                   var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+                   var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 
                    chart.draw(data, options);
                  }
@@ -114,7 +115,7 @@
           {% endif %}
           {% if method == 'POST' %}
           <div class="row">
-            <div class="col-md-6 col-sm-6">
+            <div class="col">
               <h2>Valores max</h2>
               <table class="table table-stripped">
                 <thead>
@@ -128,7 +129,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="col-md-6 col-sm-6">
+            <div class="col">
               <h2>Valores min</h2>
               <table class="table table-stripped">
                 <thead>
