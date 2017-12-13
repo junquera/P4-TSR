@@ -28,11 +28,25 @@ def save_value():
 def index():
     args = {
         't': time.time,
-        'method': request.method
+        'method': request.method,
+        'request': request
     }
     if request.method == 'GET':
-        args['values'] = db.get_all()
+        values = db.get_all()
+        if 'avg' in request.args:
+            if len(values) > 0:
+                s = 0
+                i = 0
+                for v in values:
+                    s += v['value']
+                    i += 1
+                args['avg'] = s / i
+
+        args['values'] = values
     elif request.method == 'POST':
+
+        max_threshold = None
+        min_threshold = None
 
         if 'max_threshold' in request.form:
             max_threshold = request.form['max_threshold']
@@ -40,14 +54,17 @@ def index():
         if 'min_threshold' in request.form:
             min_threshold = request.form['min_threshold']
 
-        threshhold_values = db.get_by_threshold(max=max_threshold, min=min_threshold)
-        result_values = []
-        if 'min' in threshhold_values:
-            result_values += threshhold_values['min']
-        if 'max' in threshhold_values:
-            result_values += threshhold_values['max']
-        print(result_values)
-        args['values'] = result_values
+        if max_threshold or min_threshold:
+            threshhold_values = db.get_by_threshold(max=max_threshold, min=min_threshold)
+        else:
+            threshhold_values = []
+        # result_values = []
+        # if 'min' in threshhold_values:
+        #     result_values += threshhold_values['min']
+        # if 'max' in threshhold_values:
+        #     result_values += threshhold_values['max']
+        # print(result_values)
+        args['values'] = threshhold_values
 
 
     return render_template('index.html', **args)
