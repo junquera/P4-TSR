@@ -3,8 +3,12 @@
     <title>P4</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='dice.png') }}">
 
-    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css" />
-
+    <link rel="stylesheet" href="/static/bower_components/bootstrap/css/bootstrap.min.css" />
+    <style>
+      .card{
+        margin: 10px 0;
+      }
+    </style>
   </head>
   <body>
     <div class="jumbotron text-center">
@@ -24,116 +28,128 @@
 <!-- TODO En lugar de VM, docker -->
     <div class="container">
       <div class="row">
-        <div class="col-md-4 col-sm-4">
-          <form action="/" method="post">
-            <h2>Por umbral</h2>
-            Min:<br>
-            <input name="min_threshold" type="number" value="{% if method == 'POST'  and 'min_threshold' in request.form %}{{ request.form['min_threshold'] }}{% endif %}"></input><br>
-            Max:<br>
-            <input name="max_threshold" type="number" value="{% if method == 'POST' and 'max_threshold' in request.form %}{{ request.form['max_threshold'] }}{% endif %}"></input><br>
-            <input type="submit">
-          </form>
-        </div>
-        <div class="col-md-4 col-sm-4">
-            <h2>Valor medio</h2>
-            <a href="?avg"><input type="submit"></a>
-        </div>
-        <div class="col-md-4 col-sm-4">
-            <h2>Gráficas</h2>
-            <input type="submit" onclick="alert('Xively no ofrece servicio de gráficas')">
-        </div>
-      </div>
-      <!-- <div>
-        <b>{{ t() }}</b>
-      </div> -->
-      {% if method == 'GET' %}
-        {% if avg %}
-          <h2>Media</h2>
-          <h1>{{ avg }}</h1>
-        {% endif %}
-        <h2>Valores</h2>
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <td>
-                Time
-              </td>
-              <td>
-                Value
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            {% for value in values %}
-              <tr><td>{{ value.date | datetime }}</td><td>{{ value.value }}</td></tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% endif %}
-      {% if method == 'POST' %}
-      <div class="row">
-        <div class="col-md-6 col-sm-6">
-          <h2>Valores max</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <td>
-                  Time
-                </td>
-                <td>
-                  Value
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {% for value in values['max'] %}
-                <tr><td>{{ value.date | datetime }}</td><td>{{ value.value }}</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <div class="col-md-6 col-sm-6">
-          <h2>Valores min</h2>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <td>
-                  Time
-                </td>
-                <td>
-                  Value
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {% for value in values['min'] %}
-                <tr><td>{{ value.date | datetime }}</td><td>{{ value.value }}</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      {% endif %}
-      <!-- <div class="row">
-        <div class="col-sm-4">
-          <h3>Column 1</h3>
-          <p>Lorem ipsum dolor..</p>
-          <p>Ut enim ad..</p>
-        </div>
-        <div class="col-sm-4">
-          <h3>Column 2</h3>
-          <p>Lorem ipsum dolor..</p>
-          <p>Ut enim ad..</p>
-        </div>
-        <div class="col-sm-4">
-          <h3>Column 3</h3>
-          <p>Lorem ipsum dolor..</p>
-          <p>Ut enim ad..</p>
-        </div>
-      </div> -->
-    </div>
+        <div class="col">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Valor medio</h4>
+              </div>
+              <div class="card-body">
+                {% if method == 'GET' and avg %}
+                  <h5>{{ "%.02f" % avg }}</h5>
+                {% endif %}
+                <a href="?avg"><button class="btn btn-primary">Obtener media</button></a>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Umbral</h4>
+              </div>
+              <div class="card-body">
+                <form action="/" method="post">
+                  <div class="form-group">
+                    <label for="min_threshold">Min</label>
+                    <input id="min_threshold" class="form-control" name="min_threshold" type="number" value="{% if method == 'POST'  and 'min_threshold' in request.form %}{{ request.form['min_threshold'] }}{% endif %}"></input>
+                  </div>
+                  <div class="form-group">
+                    <label for="max_threshold">Max</label>
+                    <input id="max_threshold" class="form-control" name="max_threshold" type="number" value="{% if method == 'POST' and 'max_threshold' in request.form %}{{ request.form['max_threshold'] }}{% endif %}"></input>
+                  </DIV>
+                  <button type="submit" class="btn btn-primary">Valores por umbral</button>
+                </form>
+              </div>
+            </div>
+            {% if method == 'GET' %}
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Gráficas</h4>
+              </div>
+              <div class="card-body">
+                <div id="chart_div" style="height: 450px;"></div>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                 google.charts.load('current', {'packages':['corechart']});
+                 google.charts.setOnLoadCallback(drawChart);
 
-    <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+                 function drawChart() {
+
+                   var data = new google.visualization.DataTable();
+                   data.addColumn('date', 'Date');
+                  data.addColumn('number', 'Value');
+                  data.addRows([
+                    {% for value in values %}
+                    [ new Date(Date.parse("{{ value.date | datetime }}")), {{ value.value }} ],
+                    {% endfor %}
+                  ]);
+                   var options = {
+                     title: 'Distribución de valores por tiempo',
+                     hAxis: {title: 'Tiempo'},
+                     vAxis: {title: 'Valor'}
+                   };
+
+                   var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+
+                   chart.draw(data, options);
+                 }
+                 window.onresize = drawChart;
+                </script>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="col">
+            {% if method == 'GET' %}
+            <h4>Valores</h4>
+            <table class="table table-stripped">
+              <thead>
+                <th scope="col">Tiempo</th>
+                <th scope="col">Valor</th>
+              </thead>
+              <tbody>
+                {% for value in values | sort(attribute='date') %}
+                  <tr><td>{{ value.date | datetime }}</td><td>{{ value.value }}</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endif %}
+          {% if method == 'POST' %}
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <h2>Valores max</h2>
+              <table class="table table-stripped">
+                <thead>
+                  <th scope="col">Tiempo</th>
+                  <th scope="col">Valor</th>
+                </thead>
+                <tbody>
+                  {% for value in values['max'] | sort(attribute='date')  %}
+                    <tr><td>{{ value.date | datetime }}</td><td>{{ value.value }}</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <h2>Valores min</h2>
+              <table class="table table-stripped">
+                <thead>
+                  <th scope="col">Tiempo</th>
+                  <th scope="col">Valor</th>
+                </thead>
+                <tbody>
+                  {% for value in values['min'] | sort(attribute='date') %}
+                    <tr><td>{{ value.date | datetime }}</td><td>{{ value.value }}</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/static/bower_components/bootstrap/js/bootstrap.min.js"></script>
   </body>
 </html>

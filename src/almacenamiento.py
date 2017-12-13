@@ -13,7 +13,7 @@ class Internal_DB():
 
     def add_value(self, value, time=None):
         if time is None:
-            time = datetime.datetime.utcnow()
+            time = datetime.datetime.utcnow().replace(microsecond=0).isoformat()
         self.random_values.insert_one({
             'value': value,
             'date': time
@@ -63,7 +63,7 @@ class External_DB():
 
     def add_value(self, value, time=None):
         if time is None:
-            time = datetime.datetime.utcnow()
+            time = datetime.datetime.utcnow().replace(microsecond=0).isoformat()
         self.client.publish_random_value_mqtt(value, time=str(time))
 
     def get_all(self):

@@ -13,10 +13,17 @@ db = Almacenamiento()
 app = Flask(__name__)
 
 def format_datetime(value, format='medium'):
-    try:
-        return str(datetime.datetime.strptime(value, "UTC"))
-    except:
-        return value
+    print(value)
+    if type(value) == datetime.datetime:
+        return value.isoformat(' ')
+    else:
+        if value[-1] == 'Z':
+            value = value[:-1]
+        try:
+            return datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S').isoformat(' ')
+        except:
+            return datetime.datetime.strptime(value, '%Y-%m-%d %H:%M:%S').isoformat(' ')
+
 app.jinja_env.filters['datetime'] = format_datetime
 
 cron = Cron()

@@ -12,6 +12,7 @@ pymongo = "*"
 xipy = "*"
 requests = "*"
 paho-mqtt = "*"
+gunicorn = "*"
 
 
 [dev-packages]
