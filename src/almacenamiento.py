@@ -29,14 +29,30 @@ class Internal_DB():
 
     def get_by_threshold(self, **kwargs):
         result = {}
-        if 'max' in kwargs:
-            result['max'] = self.random_values.find_one({
-                'value': {'$gt':  kwargs['max']}
-            })
         if 'min' in kwargs:
-            result['min'] = self.random_values.find_one({
-                'value': {'$lt': kwargs['min']}
-            })
+            if not kwargs['min'] is None:
+                try:
+                    min = float(kwargs['min'])
+                    print("Min %s" % min)
+                    min_vs = self.random_values.find({
+                        'value': {'$lt':  min}
+                    })
+                    result['min'] = [value for value in min_vs]
+                except:
+                    print("Error in min")
+                    pass
+        if 'max' in kwargs:
+            if not kwargs['max'] is None:
+                try:
+                    max = float(kwargs['max'])
+                    print("Max %s" % max)
+                    max_vs = self.random_values.find({
+                        'value': {'$gt': max}
+                    })
+                    result['max'] = [value for value in max_vs]
+                except:
+                    print("Error in max")
+                    pass
         return result
 
 

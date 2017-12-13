@@ -22,11 +22,19 @@
 <!-- TODO DATO 4: En lugar de umbral histórico, leer datos hasta que lo supere y contestar con SSE o web pusher -->
 <!-- TODO Multiusuario (+ oauth O-O ) -->
 <!-- TODO En lugar de VM, docker -->
-
+    <form action="/" method="post">
+      <h2>Por umbral</h2>
+      Min:<br>
+      <input name="min_threshold" type="number"></input><br>
+      Max:<br>
+      <input name="max_threshold" type="number"></input><br>
+      <input type="submit">
+    </form>
     <div class="container">
       <!-- <div>
         <b>{{ t() }}</b>
       </div> -->
+      <h2>Valores</h2>
       <table class="table table-striped">
         <thead>
           <tr>
