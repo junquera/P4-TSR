@@ -6,6 +6,7 @@ class Internal_DB():
     def __init__(self):
         # Client connection
         client = MongoClient('localhost', 27017)
+        print("Mongo connection stablished!")
         db = client.p4
         self.random_values = db.random_values
         self.random_values.delete_many({})
@@ -55,6 +56,7 @@ class External_DB():
     def __init__(self):
         # Client connection
         self.client = Xively()
+        print("Xively connected!")
 
     def add_value(self, value, time=None):
         if time is None:
