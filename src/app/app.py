@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template, url_for
-from cron import Cron
+from app.cron import Cron
 
-from almacenamiento import Almacenamiento
-from obtain import get_a_value
+from app.almacenamiento import Almacenamiento
+from app.obtain import get_a_value
 
 import time
 

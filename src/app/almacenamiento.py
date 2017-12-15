@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from xively import Xively
+from app.xively import Xively
 import datetime
 
 class Internal_DB():
