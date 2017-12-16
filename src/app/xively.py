@@ -2,11 +2,9 @@ import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import ssl
 
-from obtain import get_a_value
-
 import requests
 
-from cron import Cron
+from app.cron import Cron
 import json
 
 # https://junquera.app.xively.com/devices/1a8d1a92-dbbd-4230-8d85-5f2a87d12734
@@ -16,7 +14,7 @@ import json
 # https://developer.xively.com/v1.0/docs/storing-timeseries-data
 # https://developer.xively.com/reference#xively-intro
 
-from config import xiv_data
+from app.config import xiv_data
 
 tls = {
     'ca_certs': "/etc/ssl/certs/ca-certificates.crt",

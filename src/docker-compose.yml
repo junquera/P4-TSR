@@ -1,0 +1,17 @@
+version: "2"
+services:
+  db:
+    image: "mongo"
+    ports:
+      - "27017:27017"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    command: pipenv run gunicorn app.wsgi:app -b '0.0.0.0:8000'
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB=db

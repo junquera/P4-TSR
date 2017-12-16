@@ -1,0 +1,8 @@
+# https://docs.docker.com/compose/gettingstarted/
+# https://github.com/rajdeepd/docker-flask-mongo-todo
+FROM python:3.4-alpine
+ADD . /app
+WORKDIR /app
+COPY Pipfile.lock .
+RUN pip install pipenv
+RUN pipenv install
