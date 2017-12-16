@@ -9,7 +9,6 @@ if 'DB' in os.environ:
 else:
     db_host = 'localhost'
 
-
 class Internal_DB():
     def __init__(self):
         # Client connection
@@ -17,7 +16,6 @@ class Internal_DB():
         print("Mongo connection stablished!")
         db = client.p4
         self.random_values = db.random_values
-        self.random_values.delete_many({})
 
     def add_value(self, value, time=None):
         if time is None:
@@ -59,6 +57,8 @@ class Internal_DB():
                     pass
         return result
 
+    def clean(self):
+        self.random_values.delete_many({})
 
 class External_DB():
     def __init__(self):
@@ -101,6 +101,9 @@ class Almacenamiento():
         # Client connection
         self.external_cli = External_DB()
         self.internal_cli = Internal_DB()
+
+        # Borrar todo para recoger datos del remoto
+        self.internal_cli.clean()
 
         for v in self.external_cli.get_all():
             self.internal_cli.add_value(v['value'], time=v['date'])
