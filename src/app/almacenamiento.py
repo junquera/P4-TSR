@@ -2,10 +2,18 @@ from pymongo import MongoClient
 from app.xively import Xively
 import datetime
 
+import os
+
+if 'DB' in os.environ:
+    db_host = os.environ['DB']
+else:
+    db_host = 'localhost'
+
+
 class Internal_DB():
     def __init__(self):
         # Client connection
-        client = MongoClient('localhost', 27017)
+        client = MongoClient(db_host, 27017)
         print("Mongo connection stablished!")
         db = client.p4
         self.random_values = db.random_values
