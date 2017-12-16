@@ -9,6 +9,13 @@
         margin: 10px 0;
       }
     </style>
+    <script>
+      function umbralAsync(){
+        var min = $('#min_threshold').val();
+        var max = $('#max_threshold').val();
+        $.post("/umbral_async", {'min_threshold': min, 'max_threshold': max});
+      }
+    </script>
   </head>
   <body>
     <div class="jumbotron text-center">
@@ -55,8 +62,8 @@
                     <input id="max_threshold" class="form-control" name="max_threshold" type="number" value="{% if method == 'POST' and 'max_threshold' in request.form %}{{ request.form['max_threshold'] }}{% endif %}"></input>
                   </DIV>
                   <button type="submit" class="col btn btn-primary">Valores por umbral</button>
-                  <button type="submit" class="col btn btn-secondary" disabled>Notificar por umbral</button>
                 </form>
+                <button class="col btn btn-secondary" onclick="umbralAsync()">Notificar por umbral</button>
               </div>
             </div>
             {% if method == 'GET' %}
@@ -152,5 +159,21 @@
 
   <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
   <script src="/static/bower_components/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/bower_components/pusher-js/dist/web/pusher.min.js"></script>
+  <script>
+
+   // Enable pusher logging - don't include this in production
+   Pusher.logToConsole = true;
+
+   var pusher = new Pusher('0bc1ed07e5a70dc76514', {
+     cluster: 'eu',
+     encrypted: true
+   });
+
+   var channel = pusher.subscribe('my-channel');
+   channel.bind('my-event', function(data) {
+     alert(data.message);
+   });
+ </script>
   </body>
 </html>

@@ -12,10 +12,11 @@ else:
 class Internal_DB():
     def __init__(self):
         # Client connection
+        print("Mongo connecting at %s!" % db_host)
         client = MongoClient(db_host, 27017)
-        print("Mongo connection stablished!")
         db = client.p4
         self.random_values = db.random_values
+        print("Mongo connection stablished!")
 
     def add_value(self, value, time=None):
         if time is None:
@@ -104,9 +105,11 @@ class Almacenamiento():
 
         # Borrar todo para recoger datos del remoto
         self.internal_cli.clean()
+        print("Base de datos local limpia")
 
         for v in self.external_cli.get_all():
             self.internal_cli.add_value(v['value'], time=v['date'])
+        print("Almacenamiento cargado!")
 
     def add_value(self, value):
         self.external_cli.add_value(value)

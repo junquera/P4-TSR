@@ -4,6 +4,24 @@
   "dependencies": {
     "bootstrap": "~4.0",
     "jquery": "~3.2.1",
-    "angular": "~1.6.7"
-  }
+    "angular": "~1.6.7",
+    "pusher-js": "pusher#^4.2.1"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/junquera/P4-TSR",
+  "authors": [
+    "J.Junquera <javier.junquera.sanchez@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/bower_components",
+    "test",
+    "tests"
+  ]
 }

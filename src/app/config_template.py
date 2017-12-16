@@ -6,3 +6,11 @@ xiv_data = {
     'login_password': "xxxxxx", # user_password
     'topic': "xi/blue/v1/[account_id]/d/[username]/random_values"
 }
+
+push_data = {
+    'app_id': 'xxxxxx',
+    'key': 'xxxxxx',
+    'secret': 'xxxxxx',
+    'cluster': 'xx',
+    'ssl': True
+}

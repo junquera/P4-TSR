@@ -13,6 +13,7 @@ xipy = "*"
 requests = "*"
 paho-mqtt = "*"
 gunicorn = "*"
+pusher = "*"
 
 
 [dev-packages]
