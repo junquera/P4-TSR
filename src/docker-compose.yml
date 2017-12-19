@@ -1,16 +1,36 @@
 version: "2"
 services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    ports:
+    - "80:80"
+    depends_on:
+    - app1
+    - app2
   db:
     image: "mongo"
     ports:
-      - "27017:27017"
-  app:
+      - "27017"
+  app1:
     build:
       context: .
       dockerfile: Dockerfile-app
     command: pipenv run gunicorn app.wsgi:app -b '0.0.0.0:8000'
     ports:
-      - "8000:8000"
+      - "8000"
+    depends_on:
+      - db
+    environment:
+      - DB=db
+  app2:
+    build:
+      context: .
+      dockerfile: Dockerfile-app
+    command: pipenv run gunicorn app.wsgi:app -b '0.0.0.0:8000'
+    ports:
+      - "8000"
     depends_on:
       - db
     environment:
