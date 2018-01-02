@@ -2,7 +2,25 @@
 
 ## Especificación de la aplicación
 
+
 ### Obtención y filtrado de datos
+
+Para la obtención de los datos, codificada en el archivo `src/app/obtain.py`, hemos utilizado la librería `requests`. Descargamos la página `http://www.numeroalazar.com.ar/` y mediante una expresión regular, obtenemos el primer valor de la lista.
+
+``` python
+# Extracción de datos
+re.search(r'<div[\s]+(?=class="[^"]+"[\s]+id="numeros_generados"|id="numeros_generados"[\s]+class="[^"]+")[^>]*>.+?<h2>[^\<]+<\/h2>(.+?)<\/div>', content, flags=re.MULTILINE|re.DOTALL)
+```
+
+En la primera implementación utilicé la librería `xml`:
+
+``` python
+import xml.etree.ElementTree as ET
+root = ET.fromstring(content)
+v = root.find(//div[@id='numeros_generados']//h2)
+```
+
+Posteriormente probé con la librería `BeautifulSoup`, destinada al parsing de documentos XML, pero para ajustarme a los requisitos del enunciado, terminé implementando la expresión regular.
 
 ### Almacenamiento
 
