@@ -225,11 +225,19 @@ Ya hemos comentado cómo funciona el sistema del login (`jwt` en lugar de `0auth
 
 ### Desarrollo de umbral actual (respondiendo por SSE o *web pusher*)
 
-`TODO`
+A la hora de obtener un valor por umbral, el usuario tiene la opción de mostrar la tabla que hemos comentado en apartados anteriores o la opción de obtenerlo a través de una notificación. Para esta tarea hemos utilizado la librería `WebPusher` de [Send Pulse](https://sendpulse.com/). Para ello sólo tenemos que registrar nos en la web e instalar el sistema de notificaciones en nuestro código.
 
-- SSE: http://flask.pocoo.org/snippets/116/
+La generación de la petición por parte del usuario se hace lanzando una petición POST por *ajax* desde la página web al endpoint `/umbral_async`, con los mismos valores que la petición normal de valores por umbral:
 
-- Web Pusher: https://sendpulse.com/
+```javascript
+  function umbralAsync(){
+    var min = $('#min_threshold').val();
+    var max = $('#max_threshold').val();
+    $.post("/umbral_async", {'min_threshold': min, 'max_threshold': max});
+  }
+```
+
+En el servidor, iniciamos un hilo que queda en segundo plano buscando valores que superen dicho/s umbral/es, y cuando los obtenemos, hacemos *push* de la notificación indicando dicho valor. Esta petición es recibida por el servidor de **Send Pulse** y enviada al navegador a través de *web sockets*. Nosotros la recibimos y mostramos un panel de *alert*.
 
 ### Gunicorn
 
@@ -267,7 +275,7 @@ La arquitectura de nuestro sistema quedaría así:
 
 ## GIT
 
-
+Para desarrollar el proyecto y poder versionarlo sin perder mis avances he utilizado `git`, y un repositorio remoto en [GitHub](https://github.com). Todo el código está disponible en [https://github.com/junquera/P4-TSR](https://github.com/junquera/P4-TSR).
 
 ## Bibliografía
 
